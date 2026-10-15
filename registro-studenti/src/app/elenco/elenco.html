@@ -1,20 +1,21 @@
 <h2>Elenco degli studenti</h2>
 
-<div class="row g-2 align-items-center mb-3">
+<div class="row g-3 align-items-center mb-3">
   <div class="col-auto">
     <label for="filtro" class="col-form-label">Filtra per classe</label>
   </div>
   <div class="col-auto">
     <input id="filtro" class="form-control" [ngModel]="filtroClasse()" (ngModelChange)="filtroClasse.set($event)" placeholder="es. 4B">
   </div>
-</div>
-
-@if (filtrati().length > 0) {
-  <div class="alert alert-info mt-3" role="status">
-    Media classe filtrata per <strong>{{ filtroClasse() || 'tutte le classi' }}</strong>:
-    <strong>{{ mediaClasse().toFixed(2) }}</strong>
+  
+  <!-- Pulsanti per ordinare -->
+  <div class="col-auto ms-auto">
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-outline-secondary" [class.active]="criterioOrdinamento() === 'nome'" (click)="ordina('nome')">Ordina per Nome</button>
+      <button type="button" class="btn btn-outline-secondary" [class.active]="criterioOrdinamento() === 'media'" (click)="ordina('media')">Ordina per Media</button>
+    </div>
   </div>
-}
+</div>
 
 @if (filtrati().length === 0) {
   <div class="alert alert-warning">
@@ -25,6 +26,12 @@
     }
   </div>
 } @else {
+  @if (filtroClasse()) {
+    <div class="alert alert-info py-2">
+      Media classe filtrata per <strong>{{ filtroClasse().toUpperCase() }}</strong>: {{ mediaClasse().toFixed(2) }}
+    </div>
+  }
+
   <table class="table table-striped table-hover">
     <thead>
       <tr><th>Id</th><th>Nome</th><th>Classe</th><th>Media</th><th></th></tr>
