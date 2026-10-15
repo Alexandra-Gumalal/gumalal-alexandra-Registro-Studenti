@@ -5,9 +5,16 @@
     <label for="filtro" class="col-form-label">Filtra per classe</label>
   </div>
   <div class="col-auto">
-    <input id="filtro" class="form-control" [(ngModel)]="filtroClasse" placeholder="es. 4B">
+    <input id="filtro" class="form-control" [ngModel]="filtroClasse()" (ngModelChange)="filtroClasse.set($event)" placeholder="es. 4B">
   </div>
 </div>
+
+@if (filtrati().length > 0) {
+  <div class="alert alert-info mt-3" role="status">
+    Media classe filtrata per <strong>{{ filtroClasse() || 'tutte le classi' }}</strong>:
+    <strong>{{ mediaClasse().toFixed(2) }}</strong>
+  </div>
+}
 
 @if (filtrati().length === 0) {
   <div class="alert alert-warning">
@@ -32,7 +39,8 @@
             {{ s.mediaVoti }}
           </td>
           <td class="text-end">
-            <button type="button" class="btn btn-sm btn-outline-danger" (click)="rimuovi(s.id)">Elimina</button>
+            <a class="btn btn-sm btn-outline-primary" [routerLink]="['/elenco', s.id]">Dettaglio</a>
+            <button type="button" class="btn btn-sm btn-outline-danger ms-1" (click)="rimuovi(s.id)">Elimina</button>
           </td>
         </tr>
       }
