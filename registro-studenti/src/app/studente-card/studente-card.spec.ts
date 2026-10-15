@@ -12,6 +12,12 @@ describe('StudenteCard', () => {
 
     fixture = TestBed.createComponent(StudenteCard);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('studente', {
+      id: 1,
+      nome: 'Luca Bianchi',
+      classe: '4B',
+      mediaVoti: 7.5,
+    });
     await fixture.whenStable();
   });
 
